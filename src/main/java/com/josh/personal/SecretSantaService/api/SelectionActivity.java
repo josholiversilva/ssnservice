@@ -1,4 +1,4 @@
-package com.josh.personal.SecretSantaService.activities;
+package com.josh.personal.SecretSantaService.api;
 
 import com.josh.personal.SecretSantaService.dao.PairingsDAO;
 import com.josh.personal.SecretSantaService.dao.UsersDAO;

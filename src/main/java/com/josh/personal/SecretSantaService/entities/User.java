@@ -1,21 +1,24 @@
 package com.josh.personal.SecretSantaService.entities;
 
 import com.sun.istack.NotNull;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Builder
 @Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name="Users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Getter
+    @Type(type = "uuid-char")
+    private UUID uuid;
     @Getter
     @Setter
     @NotNull
@@ -26,7 +29,8 @@ public class User {
     private String email;
     @Getter
     @Setter
-    private int age;
+    @Builder.Default
+    private int age = -1;
     @Getter
     @Setter
     @Builder.Default

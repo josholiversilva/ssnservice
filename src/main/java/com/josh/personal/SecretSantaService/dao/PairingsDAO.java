@@ -10,7 +10,11 @@ public class PairingsDAO {
     @Autowired
     private PairingsRepository repository;
 
-    public Pairing createPairing(Pairing pairing) {
+    public Pairing postPairing(Pairing pairing) {
         return repository.save(pairing);
+    }
+
+    public Pairing getPairingById(Integer id) {
+        return repository.findById(id).orElse(null);
     }
 }

@@ -20,36 +20,25 @@ public class SelectionActivity {
     private PairingsDAO pairingsDAO;
 
     public void enact() {
-        List<User> users = usersDAO.getUsers();
+        List<User> users = usersDAO.getAllUsers();
         List<Pairing> pairings = createPairings(users);
         for (Pairing pairing: pairings) {
+            UUID giverId = pairing.getDecryptedGiverId();
+            UUID receiverId = pairing.getDecryptedReceiverId();
+            System.out.println(giverId);
+            User giver = usersDAO.getUserByUuid(giverId);
+            User receiver = usersDAO.getUserByUuid(receiverId);
             /*
-            emailHelper.sendEmail("akingjosh101@gmail.com",//pairing.getDecryptedGiverEmail(),
+            emailHelper.sendEmail("akingjosh101@gmail.com", //giver.getEmail(),
                     "Secret Santa Pairings!!",
-                    getBody(pairing));
+                    getBody(receiver.getName()));
+            pairingsDAO.postPairing(pairing);
              */
-            // System.out.println("Giver=" + pairing.getDecryptedGiverEmail() + ", Receiver=" + pairing.getDecryptedReceiver());
-            // System.out.println("Encrypted receiver = " + pairing.getEncryptedReceiverId() +
-                    // "Encrypted giver = " + pairing.getEncryptedGiverId());
-            // PairingsDAO.createPairings(pairing);
-/*
-            usersDAO.createUser(User.builder()
-                    .name("Josh Silva")
-                    .email("akingjosh101@gmail.com")
-                    .age(25)
-                    .shoe_size((float)12.5)
-                    .shirt_size("Large")
-                    .pants_size("32x32")
-                    .build());
- */
-            pairingsDAO.createPairing(new Pairing(2,3));
-            break;
         }
     }
 
-    private String getBody(Pairing pairing) {
-        String secretSantaFor = "<strong>" + pairing.getReceiverId() + "<strong>";
-        return secretSantaFor + "\n\nanything on the list as long as it doesn't break your wallet :)"
+    private String getBody(String receiver) {
+        return receiver + "\n\nanything on the list as long as it doesn't break your wallet :)"
                 + "\nyay happy Christmas!" ;
     }
 
@@ -67,7 +56,7 @@ public class SelectionActivity {
                 giver = users.get(rand.nextInt(users.size()));
             }
 
-            pairings.add(new Pairing(receiver.getId(), giver.getId()));
+            pairings.add(new Pairing(receiver.getUuid(), giver.getUuid()));
             currentGivers.add(giver);
         }
 

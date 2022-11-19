@@ -3,21 +3,35 @@ package com.josh.personal.SecretSantaService.dao;
 import com.josh.personal.SecretSantaService.entities.User;
 import com.josh.personal.SecretSantaService.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UsersDAO {
     @Autowired
     private UsersRepository repository;
 
-    public User createUser(User user) {
+    public User postUser(User user) {
         return repository.save(user);
+    }
+
+    public List<User> postUsers(List<User> users) {
+        return repository.saveAll(users);
+    }
+
+    public User getUserByUuid(UUID uuid){
+        if (repository.findByUuid(uuid.toString()).size() == 0) {
+            return null;
+        }
+        return repository.findByUuid(uuid.toString()).get(0);
+    }
+
+    public List<User> getAllUsers() {
+        return repository.findAll();
     }
 
     public List<User> getUsers() {
@@ -38,7 +52,7 @@ public class UsersDAO {
         for (Map.Entry<String, String> entry: userEmails.entrySet()) {
             String email = entry.getKey();
             String name = entry.getValue();
-            users.add(User.builder().email(email).name(name).build());
+            users.add(User.builder().uuid(UUID.randomUUID()).email(email).name(name).build());
         }
 
         return users;

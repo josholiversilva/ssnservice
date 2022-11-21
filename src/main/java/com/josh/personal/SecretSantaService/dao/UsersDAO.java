@@ -30,6 +30,14 @@ public class UsersDAO {
         return repository.findByUuid(uuid.toString()).get(0);
     }
 
+    public User getUserByEmail(String email) {
+        if (repository.findByEmail(email).size() == 0) {
+            return null;
+        }
+
+        return repository.findByEmail(email).get(0);
+    }
+
     public List<User> getAllUsers() {
         return repository.findAll();
     }

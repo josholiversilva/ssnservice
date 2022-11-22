@@ -23,6 +23,10 @@ public class Wishlist {
     @NotNull
     @Setter
     private User user;
+    @Getter
+    @Setter
+    @NotNull
+    private Integer year;
     @NotNull
     @Getter
     @Setter
@@ -30,7 +34,7 @@ public class Wishlist {
     @Getter
     @Setter
     @NotNull
-    private float price;
+    private String price;
     @NotNull
     @Getter
     @Setter

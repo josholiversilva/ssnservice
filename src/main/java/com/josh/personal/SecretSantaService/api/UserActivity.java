@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("api/v1/user")
 @RestController
@@ -17,5 +18,11 @@ public class UserActivity {
     @GetMapping
     public List<User> getUsers() {
         return usersDAO.getAllUsers();
+    }
+
+    @CrossOrigin
+    @GetMapping(path={"{uuid}"})
+    public User getUser(@PathVariable("uuid") UUID uuid) {
+        return usersDAO.getUserByUuid(uuid);
     }
 }

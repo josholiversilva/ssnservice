@@ -43,4 +43,21 @@ public class GoogleAuthHelper {
         }
         return null;
     }
+
+    public String getPictureUrl(String idTokenString) {
+        try {
+            GoogleIdToken idToken = verifier.verify(idTokenString);
+            GoogleIdToken.Payload payload = idToken.getPayload();
+            String pictureUrl = (String) payload.get("picture");
+
+            return pictureUrl;
+        } catch (GeneralSecurityException gse) {
+            System.out.println("General Security Exception - " + gse);
+        } catch (IOException io) {
+            System.out.println("IO Exception - " + io);
+        } catch (Exception e) {
+            System.out.println("Error occurred = " + e);
+        }
+        return null;
+    }
 }

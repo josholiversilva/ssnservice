@@ -45,4 +45,7 @@ public class User {
     @Setter
     @Builder.Default
     private int ring_size = -1;
+    @Getter
+    @Setter
+    private String picture_url;
 }

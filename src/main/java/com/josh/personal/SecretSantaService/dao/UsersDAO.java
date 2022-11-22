@@ -38,6 +38,10 @@ public class UsersDAO {
         return repository.findByEmail(email).get(0);
     }
 
+    public void updateUserPic(User user, String url) {
+        repository.updateUserPic(url, user.getUuid().toString());
+    }
+
     public List<User> getAllUsers() {
         return repository.findAll();
     }

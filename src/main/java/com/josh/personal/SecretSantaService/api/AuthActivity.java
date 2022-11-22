@@ -21,6 +21,11 @@ public class AuthActivity {
 
         String email = googleAuthHelper.getEmail(authRequest.getIdToken());
         User user = usersDAO.getUserByEmail(email);
+        if (user != null && user.getPicture_url() == null) {
+            String pictureUrl = googleAuthHelper.getPictureUrl(authRequest.getIdToken());
+            usersDAO.updateUserPic(user, pictureUrl);
+            user.setPicture_url(pictureUrl);
+        }
         return user;
     }
 }
